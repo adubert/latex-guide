@@ -1,0 +1,273 @@
+%%
+%% Copyright (C) 2019 by Armin Dubert
+%%
+%% This file may be distributed and/or modified under the
+%% conditions of the LaTeX Project Public License, either
+%% version 1.2 of this license or any later
+%% version. The latest version of this license is in:
+%%
+%% http://www.latex-project.org/lppl.txt
+%%
+%% and version 1.2 or later is part of all distributions of
+%% LaTeX version 1999/12/01 or later.
+%%
+%% Latex Package Lesson Preamble
+%% mypreamble.sty
+
+\NeedsTexFormat{LaTeX2e}
+\ProvidesPackage{Lesson Preamble}[ 2019/04/08 Lesson Preamble .sty file] 
+
+\RequirePackage[many]{tcolorbox}
+\RequirePackage{amsmath,amsthm,amsfonts}
+\RequirePackage{graphicx,bm}
+\RequirePackage{xcolor}
+\RequirePackage{tikz,lipsum,lmodern}
+\RequirePackage[english]{babel}
+\RequirePackage{mathrsfs}
+\RequirePackage{empheq}
+\RequirePackage[export]{adjustbox}
+\RequirePackage{wrapfig}
+\RequirePackage{cleveref}
+\RequirePackage{varwidth}
+\RequirePackage{longfbox}
+
+
+\documentclass[10pt]{elsarticle}
+	\usepackage[many]{tcolorbox}
+	\usepackage{amsmath,amsthm,amsfonts}
+	\usepackage{graphicx,bm}
+	\usepackage{xcolor}
+	\usepackage{tikz,lipsum,lmodern}
+	\usetikzlibrary{calc}
+	\usepackage[english]{babel}
+	\usepackage{mathrsfs}
+	\usepackage{empheq}
+	\usepackage[export]{adjustbox}
+	\usepackage{wrapfig}
+	\usepackage{cleveref}
+	\usepackage{varwidth}
+	\usepackage{longfbox}
+	\usepackage{geometry}
+	\tcbuselibrary{theorems}
+	\tcbuselibrary{breakable, skins}
+	
+		
+%%% --------- Macros --------- %%%
+\DeclareOption{\fillin}{\renewcommand{\fillin}{\underline{\hspace{.75in}}{\;}}}
+
+%%% ---------- Colors ----------- %%%
+% ----- Red -----
+\definecolor{mordantred19}{rgb}{0.68, 0.05, 0.0}
+% ----- Blue -----
+\definecolor{st.patrick\'sblue}{rgb}{0.14, 0.16, 0.48}
+% ----- Green ------
+\definecolor{darkspringgreen}{rgb}{0.09, 0.45, 0.27}
+% ---- White -----
+\definecolor{ghostwhite}{rgb}{0.97, 0.97, 1.0}
+\definecolor{splashedwhite}{rgb}{1.0, 0.99, 1.0}
+%% ---- Grey -----
+\definecolor{whitesmoke}{rgb}{0.96, 0.96, 0.96}
+\definecolor{lightgray}{rgb}{0.92, 0.92, 0.92}
+
+%% ---------- Example Boxes ------------ %%
+\tcbset{
+% - Style For Definitions -
+	defstyle/.style={
+		fonttitle=\bfseries\upshape, fontupper=\slshape,
+		arc=0mm, 
+		beamer,
+		colback=blue!5!white,
+		colframe=blue!75!black},
+% - Style For Theorems -
+	theostyle/.style={
+		fonttitle=\bfseries\upshape, fontupper=\slshape,
+		colback=red!10!white,
+		colframe=red!75!black},
+% - Style For Visuals -
+	visualstyle/.style={
+		height=6.5cm,
+		breakable,
+		enhanced,
+		leftrule=0pt,
+		rightrule=0pt,
+		bottomrule=0pt,
+		outer arc=0pt,
+		arc=0pt,
+		colframe=mordantred19,
+		colback=lightgray,
+		attach boxed title to top left,
+		boxed title style={
+			colback=mordantred19,
+			outer arc=0pt,
+			arc=0pt,
+			top=3pt,
+			bottom=3pt,
+		},
+		fonttitle=\sffamily,},
+%%- Style For Discussions -
+	discussionstyle/.style={
+		height=6.5cm,
+		breakable,
+		enhanced,
+		rightrule=0pt,
+		toprule=0pt,
+		outer arc=0pt,
+		arc=0pt,
+		colframe=mordantred19,
+		colback=lightgray,
+		attach boxed title to top left,
+		boxed title style={
+			colback=mordantred19,
+			outer arc=0pt,
+			arc=0pt,
+			top=3pt,
+			bottom=3pt,
+		},
+		fonttitle=\sffamily},
+% - Style For Examples -
+	mystyle/.style={
+		height=6.5cm,
+		breakable,
+		enhanced,
+		rightrule=0pt,
+		leftrule=0pt,
+		bottomrule=0pt,
+		outer arc=0pt,
+		arc=0pt,
+		colframe=mordantred19,
+		colback=lightgray,
+		attach boxed title to top left,
+		boxed title style={
+			colback=mordantred19,
+			outer arc=0pt,
+			arc=0pt,
+			top=3pt,
+			bottom=3pt,
+		},
+		fonttitle=\sffamily},
+% - Style For Long Examples -
+	longexamstyle/.style={
+		height=9.5cm, 
+		breakable,
+		enhanced,
+		rightrule=0pt,
+		leftrule=0pt,
+		bottomrule=0pt,
+		outer arc=0pt,
+		arc=0pt,
+		colframe=mordantred19,
+		colback=lightgray,
+		attach boxed title to top left,
+		boxed title style={
+			colback=mordantred19,
+			outer arc=0pt,
+			arc=0pt,
+			top=3pt,
+			bottom=3pt,
+		},
+		fonttitle=\sffamily}
+}
+
+%% ----------- Boxes ------------ %%
+\newtcolorbox[auto counter,number within=section]{example}[1][]{
+	mystyle,
+	title=Example~\thetcbcounter,
+	overlay unbroken and first={
+		\path
+		let
+		\p1=(title.north east),
+		\p2=(frame.north east)
+		in
+		node[anchor=
+			west,
+			font=\sffamily,
+			color=st.patrick\'sblue,
+			text width=\x2-\x1] 
+		at (title.east) {#1};
+	}
+}
+\newtcolorbox[auto counter,number within=section]{longexample}[1][]{
+	longexamstyle,
+	title=Example~\thetcbcounter,
+	overlay unbroken and first={
+		\path
+		let
+		\p1=(title.north east),
+		\p2=(frame.north east)
+		in
+		node[anchor=
+		west,
+		font=\sffamily,
+		color=st.patrick\'sblue,
+		text width=\x2-\x1] 
+		at (title.east) {#1};
+	}
+}
+\newtcolorbox[auto counter,number within=section]{discussion}[1][]{
+	discussionstyle,
+	title=Discussion~\thetcbcounter,
+	overlay unbroken and first={
+		\path
+		let
+		\p1=(title.north east),
+		\p2=(frame.north east)
+		in
+		node[anchor=
+		west,
+		font=\sffamily,
+		color=st.patrick\'sblue,
+		text width=\x2-\x1] 
+		at (title.east) {#1};
+	}
+}
+\newtcolorbox[auto counter,number within=section]{visualization}[1][]{
+	visualstyle,
+	title=Visualization~\thetcbcounter,
+	overlay unbroken and first={
+		\path
+		let
+		\p1=(title.north east),
+		\p2=(frame.north east)
+		in
+		node[anchor=
+		west,
+		font=\sffamily,
+		color=st.patrick\'sblue,
+		text width=\x2-\x1] 
+		at (title.east) {#1};
+	}
+}
+
+%% ----------- Theorems ----------- %%
+\newtcbtheorem[number within=subsection,crefname={definition}{definitions}]%
+	{Definition}{Definition}{defstyle}{def}%
+\newtcbtheorem[use counter from=Definition,crefname={theorem}{theorems}]%
+	{Theorem}{Theorem}{theostyle}{theo}
+	%
+\newtcbtheorem[use counter from=Definition]{CoolTheorem}{Theorem}%
+{
+	theorem style=plain,
+	enhanced,
+	colframe=blue!50!black,
+	colback=yellow!20!white,
+	coltitle=red!50!black,
+	fonttitle=\upshape\bfseries,
+	fontupper=\itshape,
+	drop fuzzy shadow=blue!50!black!50!white,
+	boxrule=0.4pt}{theo}
+\newtcbtheorem[use counter from=Definition]{DashedDefinition}{Definition}%
+ {
+ 	enhanced,
+ 	frame empty,
+ 	interior empty,
+ 	colframe=darkspringgreen!50!white,
+	coltitle=darkspringgreen!50!black,
+	fonttitle=\bfseries,
+	colbacktitle=darkspringgreen!15!white,
+	borderline={0.5mm}{0mm}{darkspringgreen!15!white},
+	borderline={0.5mm}{0mm}{darkspringgreen!50!white,dashed},
+	attach boxed title to top center={yshift=-2mm},
+	boxed title style={
+		boxrule=0.4pt},
+		varwidth boxed title
+	}{theo}
